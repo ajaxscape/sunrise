@@ -22,7 +22,7 @@ function millisecondsToTime(duration) {
   return `${hours} hours, ${minutes} minutes, ${seconds} seconds`
 }
 
-app.get('/', async (req, res) => {
+app.get('/earliest', async (req, res) => {
   let locations = []
 
   // Retrieve the required number of locations in batches
