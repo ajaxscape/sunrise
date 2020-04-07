@@ -24,4 +24,3 @@ class SunriseData {
 }
 
 module.exports = SunriseData
-

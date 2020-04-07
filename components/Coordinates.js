@@ -14,6 +14,7 @@ class Coordinates {
     // Returns random latitude to 8 decimal places
     return random(180)
   }
+
   static randomLongitude () {
     // Returns random latitude to 8 decimal places
     return random(85.05112878)
