@@ -7,7 +7,7 @@ const { fetchBatch } = require('./SunriseData')
 const app = express()
 const port = process.env.PORT || '8000'
 
-const maxLocations = 5
+const maxLocations = 100
 const batchSize = 5
 const delay = 5000
 
@@ -37,6 +37,7 @@ app.get('/', async (req, res) => {
     while (batchOfCoordinates.length < batchSize) {
       batchOfCoordinates.push({ latitude: randomLatitude(), longitude: randomLongitude() })
     }
+    console.log('Retrieving: ', batchOfCoordinates)
     const batchOfLocations = await fetchBatch(batchOfCoordinates)
 
     const error = batchOfLocations.find((result) => typeof result !== 'object')
@@ -47,6 +48,7 @@ app.get('/', async (req, res) => {
 
     // Add the batch of locations to those we have already collected
     locations = [...locations, ...batchOfLocations]
+    console.log('Remaining: ', maxLocations - locations.length)
   }
 
   // Now find the earliest
@@ -62,13 +64,20 @@ app.get('/', async (req, res) => {
   const { latitude, longitude } = earliest
 
   // Return day length data and location
-  res.send({
+
+  const result = {
     latitude,
     longitude,
     sunrise,
     sunset,
     dayLength
-  })
+  }
+
+  console.log('')
+  console.log('Earliest => ')
+  console.log(result)
+
+  res.send(result)
 })
 
 app.listen(port, () => {
